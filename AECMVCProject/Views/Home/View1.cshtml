@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "My First View";
+}
+
+<h1>View1</h1>
+<h2>Hello From First View :)</h2>
+<!--HTML + CSS + JS + C#-->
+<!--Razor Synatx-->
+<!--Block Of code-->
+@{
+    int x = 10;
+    int y=x+10;
+}
+<!--Inline Statment-->
+@(x+y)
+
+<!--Condition Statment-->
+@if(x>=y){
+    <h3>X Greater Than Y</h3>
+}else
+{
+    <h3>Y = @y Greater Than X =@x</h3>
+}
+
+<hr />
+<!--iteration (loop -while -dow hile -froeach-->
+<ul>
+    @for (int i = 0; i < 10; i++)
+    {
+        <li>@i</li>
+    }
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    h1{
+        background-color:yellow;
+        color:red;
+        border: 2px solid black;
+    }
+</style>
+<script>
+console.log("Helllo");
+</script>

@@ -1,0 +1,25 @@
+﻿<!--Coming data with type List<student>-->
+@{
+    ViewData["Title"] = "ShowAll";
+}
+
+
+<h1>ShowAll</h1>
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Imag</th>
+        <th>Imag</th>
+    </tr>
+    @foreach (Student item in Model)
+    {
+       <tr>
+           <td>@item.Id</td>
+           <td>@item.Name</td>
+           <td>@item.ImageURL</td>
+           <td><img src="/Images/@item.ImageURL" style="width:100px"/></td>
+       </tr> 
+    }
+</table>
+
