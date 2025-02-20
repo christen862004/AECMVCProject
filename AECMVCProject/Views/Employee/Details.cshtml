@@ -1,0 +1,45 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "Details";//set  ==> Layout 
+}
+
+<h1>Details</h1>
+
+
+<h2 style="background-color:@ViewData["Clr"]">@Model.Name</h2>
+<img src="/Images/@Model.ImageURL"  style="width:50px"/>
+<hr />
+@(int.Parse(ViewData["Temp"].ToString())+10)
+
+@(ViewBag.Temp+10)
+<hr>
+@ViewData["Msg"]
+@ViewBag.Msg
+<hr />
+<select class="form form-control">
+    @foreach (var item in ViewBag.Faculty)
+    {
+        <option>@item</option>
+    }
+</select>
+
+
+<select class="form form-control">
+    @foreach (var item in (List<string>)ViewData["Faculty"])
+    {
+        <option>@item</option>
+    }
+</select>
+
+<hr />
+
+
+
+
+
+
+<!--ViewData Problems
+1) Type Casting  & throw exeception
+2) magic string  & Throw exception
+
+-->

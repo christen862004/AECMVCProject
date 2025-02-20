@@ -1,0 +1,15 @@
+﻿@model EmployeeWithTempMsgClrFacultyListViewModel
+
+@{
+    ViewData["Title"] = "DetailsVM";
+}
+
+<h1>DetailsVM</h1>
+
+<h2 style="color:@Model.Color">@Model.EmpName</h2>
+<select class="form form-control">
+    @foreach (var item in Model.Faculities)
+    {
+        <option>@item</option>
+    }
+</select>

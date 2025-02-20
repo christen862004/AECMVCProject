@@ -1,4 +1,5 @@
 ﻿<!--Coming data with type List<student>-->
+@model List<Student>
 @{
     ViewData["Title"] = "ShowAll";
 }
@@ -12,7 +13,7 @@
         <th>Imag</th>
         <th>Imag</th>
     </tr>
-    @foreach (Student item in Model)
+    @foreach (var item in Model)
     {
        <tr>
            <td>@item.Id</td>
