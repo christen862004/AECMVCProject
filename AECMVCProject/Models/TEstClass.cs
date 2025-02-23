@@ -41,14 +41,15 @@ namespace AECMVCProject.Models
 
     public class TEstClass
     {
-        public int Add(int x,int y)
+        
+        public int Add(dynamic x,int y)
         {
             Controller1 c1=new Controller1();
             c1.DisplayData();
             c1.SetData();//
             c1 = new Controller1();
             c1.DisplayData();//empty
-
+            
 
 
 
