@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Builder;
+
 namespace AECMVCProject
 {
     public class Program
@@ -10,7 +12,7 @@ namespace AECMVCProject
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddSession(
-                option =>{
+                option => {
                     option.IdleTimeout = TimeSpan.FromMinutes(30);
                 });//default seetin session Meddleware
 
@@ -51,12 +53,29 @@ namespace AECMVCProject
             }
             app.UseStaticFiles();//css/sity.css 
 
-            app.UseRouting(); //Department/All 
-            
+            app.UseRouting(); //Department/All  (Mapping) (Security)
+
             app.UseSession();
 
             app.UseAuthorization();//role form remember
 
+            //DEcalre Route Template + Execute
+            //app.MapControllerRoute(
+            //  name: "Route1",
+            //  pattern: "M1/{name:alpha}/{age:int:range(20,40)}",//m1/ahmed   m1/ahmed/12
+            //  defaults: new{ controller="Route", action="Method1"});
+
+            //app.MapControllerRoute(
+            //  name: "Route1",
+            //  pattern: "{contorller}/{action}",
+            //  defaults: new { controller = "Route", action = "Method2" });
+
+
+            //app.MapControllerRoute(
+            //name: "Route2",
+            //pattern: "M2",
+            //defaults: new { controller = "Route", action = "Method2" });
+            //DEfault Micrsoft
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

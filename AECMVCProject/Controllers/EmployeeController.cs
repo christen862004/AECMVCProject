@@ -14,7 +14,31 @@ namespace AECMVCProject.Controllers
             List<Employee> EmpsModel = context.Employee.ToList();
             return View("Index", EmpsModel);
         }
-        //Employee/MEthod
+
+        #region New
+        public IActionResult New()
+        {
+            ViewBag.deptList = context.Department.ToList();//list<Department>
+            return View("New");
+        }
+        //handel any request (internal | External )
+        [HttpPost] //chec Request.MEthod="Post"
+        [ValidateAntiForgeryToken] //Request.Form["_RequestVerificationToken"] Valid login
+        public IActionResult SaveNew(Employee empFromRequest)
+        {
+            if(empFromRequest.Name!=null && empFromRequest.Salary > 6000)
+            {
+                //mapping from viewModel to Model Employee
+                context.Add(empFromRequest);
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.deptList = context.Department.ToList();//list<Department>
+            return View("New",empFromRequest);
+        }
+        #endregion
+
+        #region Overload Employee/MEthod
         [HttpGet]
         public IActionResult Method()
         {
@@ -25,6 +49,7 @@ namespace AECMVCProject.Controllers
         {
             return Content("Method2");
         }
+        #endregion
 
         #region Edit Actions
         public IActionResult Edit(int id)

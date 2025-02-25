@@ -1,0 +1,40 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "New";
+    SelectList deptOptions = new SelectList(ViewBag.deptList, "Id", "Name");
+}
+
+<h1>New</h1>
+<form asp-action="SaveNew" asp-controller="Employee"  method="post">
+    <!--Cerate Token input type hiddent name="_requestVerivToken"-->
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form form-control" />
+    </div>
+    <div>
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form form-control" />
+    </div>
+    <div>
+        <label asp-for="JobTitle"></label>
+        <input asp-for="JobTitle" class="form form-control" />
+    </div>
+    <div>
+        <label asp-for="ImageURL"></label>
+        <input asp-for="ImageURL"  class="form form-control" />
+    </div>
+    <div>
+        <label asp-for="Salary"></label>
+        <input asp-for="Salary" class="form form-control" />
+    </div>
+    <div>
+        <label asp-for="DepartmentID"></label>
+        @* <input asp-for="DepartmentID" class="form form-control" /> *@
+        <select class="form form-control" asp-for="DepartmentID" asp-items="deptOptions">
+        </select>
+    </div>
+
+
+    <input type="submit" value="Create" class="btn btn-success" />
+</form>
+<a asp-action="Index">Back To List</a>
