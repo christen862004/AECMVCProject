@@ -14,6 +14,27 @@ namespace AECMVCProject.Controllers
             List<Employee> EmpsModel = context.Employee.ToList();
             return View("Index", EmpsModel);
         }
+        //Alex ==>%5
+        //Cairo ==>%3
+        //any true
+        ///Employee/CheckSalary? Salary = 1000
+        public IActionResult CheckSalary(int Salary,string Address)
+         {
+            if (Address == "Alex")
+            {
+                if (Salary % 5 == 0)
+                    return Json(true);
+                else
+                    return Json(false);
+            }else if(Address == "Cairo")
+            {
+                if (Salary % 3 == 0)
+                    return Json(true);
+                else
+                    return Json(false);
+            }
+            return Json(true);
+        }
 
         #region New
         public IActionResult New()
@@ -26,12 +47,20 @@ namespace AECMVCProject.Controllers
         [ValidateAntiForgeryToken] //Request.Form["_RequestVerificationToken"] Valid login
         public IActionResult SaveNew(Employee empFromRequest)
         {
-            if(empFromRequest.Name!=null && empFromRequest.Salary > 6000)
+            if(ModelState.IsValid==true)
             {
-                //mapping from viewModel to Model Employee
-                context.Add(empFromRequest);
-                context.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    context.Add(empFromRequest);
+                    context.SaveChanges();
+                    return RedirectToAction("Index");
+                }catch(Exception ex)
+                {
+                    //local hsndel exception
+                    //ModelState.AddModelError("DepartmentID","Select DEpt");//div
+
+                    ModelState.AddModelError(string.Empty,ex.InnerException.Message);//div
+                }
             }
             ViewBag.deptList = context.Department.ToList();//list<Department>
             return View("New",empFromRequest);

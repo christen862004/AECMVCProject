@@ -6,35 +6,46 @@
 
 <h1>New</h1>
 <form asp-action="SaveNew" asp-controller="Employee"  method="post">
+    <div asp-validation-summary="All"></div>
     <!--Cerate Token input type hiddent name="_requestVerivToken"-->
     <div>
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form form-control" />
+        <span asp-validation-for="Name"  class="text-danger"></span>
     </div>
     <div>
         <label asp-for="Address"></label>
         <input asp-for="Address" class="form form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="JobTitle"></label>
         <input asp-for="JobTitle" class="form form-control" />
+        <span asp-validation-for="JobTitle" class="text-danger"></span>
+
     </div>
     <div>
         <label asp-for="ImageURL"></label>
         <input asp-for="ImageURL"  class="form form-control" />
+        <span asp-validation-for="ImageURL" class="text-danger"></span>
+
     </div>
     <div>
         <label asp-for="Salary"></label>
         <input asp-for="Salary" class="form form-control" />
+        <span asp-validation-for="Salary" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="DepartmentID"></label>
-        @* <input asp-for="DepartmentID" class="form form-control" /> *@
         <select class="form form-control" asp-for="DepartmentID" asp-items="deptOptions">
+            <option value="0">--Select Department --</option>
         </select>
+        <span asp-validation-for="DepartmentID"  class="text-danger"></span>
     </div>
-
-
     <input type="submit" value="Create" class="btn btn-success" />
 </form>
 <a asp-action="Index">Back To List</a>
+
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
