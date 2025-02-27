@@ -1,4 +1,7 @@
+using AECMVCProject.Models;
+using AECMVCProject.Repository;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 
 namespace AECMVCProject
 {
@@ -8,13 +11,25 @@ namespace AECMVCProject
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container. Day8
+            // Add services to the IOC container(ServiceProvider). Day8
+            //Built In Service
+               //1 ) built in services  ,already register
+               //2 ) built in services  ,need to register 
             builder.Services.AddControllersWithViews();
-
             builder.Services.AddSession(
                 option => {
                     option.IdleTimeout = TimeSpan.FromMinutes(30);
-                });//default seetin session Meddleware
+                });
+            builder.Services.AddDbContext<AECContext>(
+                options =>
+                {
+                    options.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
+                });
+
+            //Custom Service : decalre ,need to register
+            builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();
+            builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
+
 
             var app = builder.Build();
 

@@ -1,4 +1,5 @@
 ﻿using AECMVCProject.Models;
+using AECMVCProject.Repository;
 using AECMVCProject.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,17 +8,26 @@ namespace AECMVCProject.Controllers
 {
     public class EmployeeController : Controller
     {
-        AECContext context = new AECContext();
+        //AECContext context = new AECContext();//tigh couple with AECContext
+        //Implement DIP
+        IEmployeeRepository EmployeeRepository;//lossly couple
+        IDepartmentRepository DepartmentRepository;
+        //Dependance Inject
+        public EmployeeController(IEmployeeRepository EmpRepo, IDepartmentRepository DeptRepo)
+        {
+            EmployeeRepository = EmpRepo;
+            DepartmentRepository = DeptRepo;
+        }
+
+
+
 
         public IActionResult Index()
         {
-            List<Employee> EmpsModel = context.Employee.ToList();
+            List<Employee> EmpsModel =EmployeeRepository.GetAll();
             return View("Index", EmpsModel);
         }
-        //Alex ==>%5
-        //Cairo ==>%3
-        //any true
-        ///Employee/CheckSalary? Salary = 1000
+      
         public IActionResult CheckSalary(int Salary,string Address)
          {
             if (Address == "Alex")
@@ -39,7 +49,7 @@ namespace AECMVCProject.Controllers
         #region New
         public IActionResult New()
         {
-            ViewBag.deptList = context.Department.ToList();//list<Department>
+            ViewBag.deptList = DepartmentRepository.GetAll();//list<Department>
             return View("New");
         }
         //handel any request (internal | External )
@@ -51,8 +61,8 @@ namespace AECMVCProject.Controllers
             {
                 try
                 {
-                    context.Add(empFromRequest);
-                    context.SaveChanges();
+                    EmployeeRepository.Insert(empFromRequest);
+                    EmployeeRepository.Save();
                     return RedirectToAction("Index");
                 }catch(Exception ex)
                 {
@@ -62,7 +72,7 @@ namespace AECMVCProject.Controllers
                     ModelState.AddModelError(string.Empty,ex.InnerException.Message);//div
                 }
             }
-            ViewBag.deptList = context.Department.ToList();//list<Department>
+            ViewBag.deptList = DepartmentRepository.GetAll();//list<Department>
             return View("New",empFromRequest);
         }
         #endregion
@@ -83,9 +93,9 @@ namespace AECMVCProject.Controllers
         #region Edit Actions
         public IActionResult Edit(int id)
         {
-            Employee empModel=context.Employee.FirstOrDefault(x => x.Id == id);
+            Employee empModel = EmployeeRepository.GetById(id);
             if(empModel != null) {
-                List<Department> deptList = context.Department.ToList();
+                List<Department> deptList = DepartmentRepository.GetAll();
                 EmployeeWithDeptListViewModel empVM = new ();
                 //mapping
                 empVM.Id = empModel.Id;
@@ -107,7 +117,7 @@ namespace AECMVCProject.Controllers
         public IActionResult SaveEdit(EmployeeWithDeptListViewModel EmpFromRequest) {
             if(EmpFromRequest.Name != null) {
                 //get old ref from context
-                Employee empFromDB=context.Employee.FirstOrDefault(e=>e.Id== EmpFromRequest.Id);
+                Employee empFromDB=EmployeeRepository.GetById(EmpFromRequest.Id);
                 //change propert with new value
                 empFromDB.Name= EmpFromRequest.Name;
                 empFromDB.Salary= EmpFromRequest.Salary;
@@ -116,11 +126,11 @@ namespace AECMVCProject.Controllers
                 empFromDB.ImageURL= EmpFromRequest.ImageURL;
                 empFromDB.DepartmentID= EmpFromRequest.DepartmentID;
                 //Save change
-                context.SaveChanges();
+                EmployeeRepository.Save();
                 return RedirectToAction("Index");
             }
           
-            EmpFromRequest.DeptList = context.Department.ToList();//refill detlist
+            EmpFromRequest.DeptList = DepartmentRepository.GetAll();//refill detlist
             return View("Edit", EmpFromRequest);
         }
 
@@ -147,7 +157,7 @@ namespace AECMVCProject.Controllers
             //-----------------------------------
 
             Employee EmpModel=
-                context.Employee.FirstOrDefault(e=>e.Id == id);
+                EmployeeRepository.GetById(id);
            
             return View("Details", EmpModel);//View DEtails ,Model With type Employeee
         }
@@ -163,7 +173,7 @@ namespace AECMVCProject.Controllers
             { "Engineer","FCI","Agrucatiure","Law"};
          
             Employee EmpModel =
-                context.Employee.FirstOrDefault(e => e.Id == id);
+                EmployeeRepository.GetById(id);
             //-----------------------------------
             //Declare ViewModel
             var EmpVM = new EmployeeWithTempMsgClrFacultyListViewModel();

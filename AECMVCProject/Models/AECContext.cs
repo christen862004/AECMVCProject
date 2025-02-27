@@ -14,6 +14,11 @@ namespace AECMVCProject.Models
         {
             
         }
+
+        public AECContext(DbContextOptions<AECContext> options) : base(options)//ask ioc 
+        {
+
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=AEC2025;Integrated Security=True;Encrypt=False");

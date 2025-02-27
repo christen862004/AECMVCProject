@@ -1,4 +1,5 @@
 ﻿using AECMVCProject.Models;
+using AECMVCProject.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
 
@@ -6,11 +7,16 @@ namespace AECMVCProject.Controllers
 {
     public class DepartmentController : Controller
     {
-        AECContext Context = new AECContext();
+        // AECContext Context = new AECContext();
+        IDepartmentRepository DeptRepository;
+        public DepartmentController(IDepartmentRepository deptReop)
+        {
+            DeptRepository = deptReop;
+        }
         public IActionResult Index()
         {
             List<Department> DEptListModel=
-                Context.Department.ToList();
+                DeptRepository.GetAll();
             return View("Index",DEptListModel);//View Index ,Model With type List<department>
         }
 
@@ -30,8 +36,8 @@ namespace AECMVCProject.Controllers
             
             if (newDeptFromRequest.Name != null)
             {
-                Context.Department.Add(newDeptFromRequest);
-                Context.SaveChanges();
+                DeptRepository.Insert(newDeptFromRequest);
+                DeptRepository.Save();
                 return RedirectToAction("Index");//, "Department", new {id=1,name=2});
             }
             return View("New", newDeptFromRequest);//view new ,model Department

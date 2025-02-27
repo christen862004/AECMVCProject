@@ -1,0 +1,16 @@
+﻿@using AECMVCProject.Repository
+@inject IDepartmentRepository deptRepo
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<h2>Service Id From Controller</h2>
+<h3>@ViewBag.ID</h3>
+<hr />
+<h2>Service Id From View
+</h2>
+<h3>@deptRepo.ID</h3>
+
+
