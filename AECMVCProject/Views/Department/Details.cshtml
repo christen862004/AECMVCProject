@@ -1,0 +1,13 @@
+﻿@model Department
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<partial name="_DeptCard"/><!--Take the same model from View-->
+<hr />
+<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+<a asp-action="Index" >Back To List</a>
+

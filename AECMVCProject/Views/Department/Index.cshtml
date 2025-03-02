@@ -7,6 +7,9 @@
 <a href="/Department/New">New</a>
 
 <h1>Index</h1>
+<div id="div1" style="border:2px solid red">
+
+</div>
 <table class="table table-hover table-bordered">
     <tr>
         <th>ID</th>
@@ -17,7 +20,24 @@
         <tr>
             <td>@item.Id</td>
             <td>@item.Name</td>
+            <td><a asp-action="Details" asp-route-id="@item.Id">DEtails</a></td>
+            <td><a href="#" onclick="GetDeptData(@item.Id)">DEtails Partial</a></td>
         </tr>
     }
 </table>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+<script>
+    function GetDeptData(deptID) {
+        //Ajax Jquery
+        event.preventDefault();//prevent href
+        $.ajax({
+            url: "/Department/DetailPartial/" + deptID,
+            success: function (result) {
+                   // $("#div1").html(result);
+                    console.log(result);
+                    $("#div1").html("<ul><li>" + result.name + "</li></ul>");
+                }
+        });
+    }
+</script>

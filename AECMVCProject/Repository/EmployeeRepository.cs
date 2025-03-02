@@ -36,5 +36,10 @@ namespace AECMVCProject.Repository
         {
             return context.SaveChanges();
         }
+
+        public List<Employee> GetByDeptID(int deptID)
+        {
+            return context.Employee.Where(e=>e.DepartmentID==deptID).ToList();  
+        }
     }
 }

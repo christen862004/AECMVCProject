@@ -1,3 +1,4 @@
+using AECMVCProject.Filters;
 using AECMVCProject.Models;
 using AECMVCProject.Repository;
 using Microsoft.AspNetCore.Builder;
@@ -13,9 +14,13 @@ namespace AECMVCProject
 
             // Add services to the IOC container(ServiceProvider). Day8
             //Built In Service
-               //1 ) built in services  ,already register
-               //2 ) built in services  ,need to register 
+            //1 ) built in services  ,already register
+            //2 ) built in services  ,need to register 
             builder.Services.AddControllersWithViews();
+            //options =>{
+            //    //global filter
+            //    options.Filters.Add(new HandelErrorAttribute());
+            //});
             builder.Services.AddSession(
                 option => {
                     option.IdleTimeout = TimeSpan.FromMinutes(30);
