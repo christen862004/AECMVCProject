@@ -20,7 +20,7 @@ namespace AECMVCProject.Controllers
             empRepo = EmpRepo;
         }
 
-        
+        [Authorize]//
         public IActionResult Index()
         {
             List<Department> DEptListModel=

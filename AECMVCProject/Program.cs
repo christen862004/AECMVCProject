@@ -2,6 +2,7 @@ using AECMVCProject.Filters;
 using AECMVCProject.Models;
 using AECMVCProject.Repository;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace AECMVCProject
@@ -30,6 +31,25 @@ namespace AECMVCProject
                 {
                     options.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
                 });
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options=>
+            {//Yara
+                options.Password.RequiredLength = 4;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = true;
+            }).AddEntityFrameworkStores<AECContext>();
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             //Custom Service : decalre ,need to register
             builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();

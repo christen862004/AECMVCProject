@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace AECMVCProject.Models
 {
-    public class AECContext :DbContext
+    public class AECContext :IdentityDbContext<ApplicationUser>
     {
         public DbSet<Employee> Employee { get; set; }
         public DbSet<Department> Department { get; set; }
